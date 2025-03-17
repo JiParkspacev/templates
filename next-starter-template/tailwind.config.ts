@@ -1,20 +1,14 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  theme: {
-    extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
-    },
-  },
-  plugins: [],
-};
-export default config;
+function fetchDataFromProxy() {
+  var targetUrl = "https://33m2.co.kr/room/detail/12345";  // 실제 크롤링할 URL
+  var proxyUrl = "https://google-sheets-proxy.your-cloudflare-id.workers.dev?url=" + encodeURIComponent(targetUrl);
+  
+  try {
+    var response = UrlFetchApp.fetch(proxyUrl, {
+      muteHttpExceptions: true,
+    });
+    
+    Logger.log(response.getContentText());  // 가져온 HTML 확인
+  } catch (error) {
+    Logger.log("❌ 오류 발생: " + error.message);
+  }
+}
